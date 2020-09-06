@@ -34,9 +34,7 @@ class GetPostFragment: Fragment(R.layout.fragment_get_post) {
     private fun getAllPost() {
         val result: MutableList<Post> = mutableListOf()
         db.collection("users").document(mAuth.currentUser?.uid.toString()).get()
-            .addOnSuccessListener {
-                val username = it.get("username").toString()
-
+            .addOnSuccessListener { val username = it.get("username").toString()
                 db.collection("posts").addSnapshotListener { value, error ->
                     if (error != null) {
                         Toast.makeText(
