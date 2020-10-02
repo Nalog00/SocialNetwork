@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.network.R
 import com.example.network.data.Post
+import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.item_post.view.*
 
 class PostAdapter: RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
@@ -16,11 +17,25 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
+   private var onItemClicked: (model: Post)->Unit = {}
+    fun setOnItemClickListener(onItemClicked: (model: Post)->Unit){ this.onItemClicked = onItemClicked }
+
+
+//    private var onCommentClicked: (model: Post)-> Unit = {}
+//    fun setOnCommentClickListener(onCommentClicked: (model: Post)-> Unit)  {this.onCommentClicked = onCommentClicked }
+
+    inner class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun populateModel(model: Post){
             itemView.tvTheme.text = model.theme
             itemView.tvUsername.text = model.username
             itemView.tvPostText.text = model.text
+            itemView.setOnClickListener {
+                onItemClicked.invoke(model)
+            }
+//            itemView.ivComment.setOnClickListener {
+//            onCommentClicked.invoke(model)
+//            }
         }
     }
 
